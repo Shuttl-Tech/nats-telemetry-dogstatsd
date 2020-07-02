@@ -31,7 +31,7 @@ fmtcheck:
 
 .PHONY: fmtcheck
 
-build: test
+build:
 	@go build -a -o _build/nats-telemetry-dogstatsd -ldflags "-s -w -extldflags \"-static\" -X 'main.Version=${GIT_COMMIT}'"
 
 .PHONY: build
