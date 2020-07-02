@@ -29,7 +29,8 @@ func start(c *cli.Context) error {
 
 	metrics, err := statsd.New(config.DogstatsdAddr,
 		statsd.WithNamespace(config.StatsNamespace),
-		statsd.WithTags(config.DefaultTags))
+		statsd.WithTags(config.DefaultTags),
+		statsd.WithoutTelemetry())
 
 	if err != nil {
 		return fmt.Errorf("failed to create statsd agent. %s", err)

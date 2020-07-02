@@ -5,7 +5,7 @@ import (
 	"github.com/Shuttl-Tech/nats-telemetry-dogstatsd/endpoints"
 	"log"
 	"net/http"
-	"path"
+	"strings"
 )
 
 func exportMetrics(emitter endpoints.Emitter, server string) {
@@ -16,7 +16,7 @@ func exportMetrics(emitter endpoints.Emitter, server string) {
 }
 
 func query(host, endpoint string, target interface{}) {
-	endpoint = path.Join(host, endpoint)
+	endpoint = strings.TrimRight(host, "/") + endpoint
 	resp, err := http.Get(endpoint)
 	if err != nil {
 		log.Printf("failed to query metrics endpoint %s. %s", endpoint, err)
