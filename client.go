@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/DataDog/datadog-go/statsd"
+	"github.com/Shuttl-Tech/nats-telemetry-dogstatsd/endpoints"
 	"github.com/urfave/cli/v2"
 	"os"
 	"os/signal"
@@ -37,7 +38,7 @@ func start(c *cli.Context) error {
 	return beginExport(ctx, metrics, config.NATSAddr, config.Frequency)
 }
 
-func beginExport(ctx context.Context, stats *statsd.Client, server string, frequency time.Duration) error {
+func beginExport(ctx context.Context, emitter endpoints.Emitter, server string, frequency time.Duration) error {
 	ticker := time.NewTicker(frequency)
 	for {
 		select {
@@ -45,7 +46,7 @@ func beginExport(ctx context.Context, stats *statsd.Client, server string, frequ
 			return nil
 
 		case <-ticker.C:
-			exportMetrics(stats, server)
+			exportMetrics(emitter, server)
 		}
 	}
 }

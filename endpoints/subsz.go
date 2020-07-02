@@ -1,7 +1,5 @@
 package endpoints
 
-import "github.com/DataDog/datadog-go/statsd"
-
 type Subsz struct {
 	NumSubscriptions float64 `json:"num_subscriptions"`
 	NumCache         float64 `json:"num_cache"`
@@ -13,7 +11,7 @@ type Subsz struct {
 	AvgFanout        float64 `json:"avg_fanout"`
 }
 
-func (v *Subsz) Export(stats *statsd.Client) {
+func (v *Subsz) Export(stats Emitter) {
 	_ = stats.Gauge("sub.num_subscriptions", v.NumSubscriptions, nil, 1)
 	_ = stats.Gauge("sub.num_cache", v.NumCache, nil, 1)
 	_ = stats.Gauge("sub.num_inserts", v.NumInserts, nil, 1)

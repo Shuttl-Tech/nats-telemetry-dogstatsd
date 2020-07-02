@@ -1,7 +1,5 @@
 package endpoints
 
-import "github.com/DataDog/datadog-go/statsd"
-
 type Leafz struct {
 	ServerID  string  `json:"server_id"`
 	Now       string  `json:"now"`
@@ -22,7 +20,7 @@ type Leaf struct {
 	SubscriptionsList []string `json:"subscriptions_list"`
 }
 
-func (v *Leafz) Export(stats *statsd.Client) {
+func (v *Leafz) Export(stats Emitter) {
 	tags := []string{"server_id:" + v.ServerID}
 	_ = stats.Gauge("leaf.nodes_count", v.Leafnodes, tags, 1)
 

@@ -1,7 +1,5 @@
 package endpoints
 
-import "github.com/DataDog/datadog-go/statsd"
-
 type Varz struct {
 	AuthTimeout      int           `json:"auth_timeout"`
 	CPU              float64       `json:"cpu"`
@@ -57,7 +55,7 @@ type HTTPReqStats struct {
 	Varz     int `json:"/varz"`
 }
 
-func (v *Varz) Export(stats *statsd.Client) {
+func (v *Varz) Export(stats Emitter) {
 	tags := []string{"server_id:" + v.ServerID}
 
 	_ = stats.Gauge("server.max_connections", v.MaxConnections, tags, 1)

@@ -1,7 +1,6 @@
 package endpoints
 
 import (
-	"github.com/DataDog/datadog-go/statsd"
 	"time"
 )
 
@@ -36,7 +35,7 @@ type Connections struct {
 	SubscriptionsList []string `json:"subscriptions_list"`
 }
 
-func (v *Connz) Export(stats *statsd.Client) {
+func (v *Connz) Export(stats Emitter) {
 	tags := []string{"server_id:" + v.ServerID}
 
 	_ = stats.Gauge("conn.num_total", float64(len(v.Connections)), tags, 1)

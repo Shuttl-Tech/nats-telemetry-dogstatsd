@@ -1,9 +1,12 @@
 package endpoints
 
-import "github.com/DataDog/datadog-go/statsd"
+type Emitter interface {
+	Gauge(name string, value float64, tags []string, rate float64) error
+	Count(name string, value int64, tags []string, rate float64) error
+}
 
 type exporter interface {
-	Export(*statsd.Client)
+	Export(emitter Emitter)
 }
 
 var Sources = map[string]exporter{

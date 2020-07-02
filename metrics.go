@@ -2,17 +2,16 @@ package main
 
 import (
 	"encoding/json"
-	"github.com/DataDog/datadog-go/statsd"
 	"github.com/Shuttl-Tech/nats-telemetry-dogstatsd/endpoints"
 	"log"
 	"net/http"
 	"path"
 )
 
-func exportMetrics(stats *statsd.Client, server string) {
+func exportMetrics(emitter endpoints.Emitter, server string) {
 	for endpoint, target := range endpoints.Sources {
 		query(server, endpoint, target)
-		go target.Export(stats)
+		go target.Export(emitter)
 	}
 }
 

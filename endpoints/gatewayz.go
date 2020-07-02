@@ -1,7 +1,6 @@
 package endpoints
 
 import (
-	"github.com/DataDog/datadog-go/statsd"
 	"time"
 )
 
@@ -37,7 +36,7 @@ type Gateway struct {
 	Connection Connection `json:"connection"`
 }
 
-func (v *Gatewayz) Export(stats *statsd.Client) {
+func (v *Gatewayz) Export(stats Emitter) {
 	tags := []string{
 		"server_id:" + v.ServerID,
 		"name:" + v.Name,
@@ -54,7 +53,7 @@ func (v *Gatewayz) Export(stats *statsd.Client) {
 	}
 }
 
-func dumpGwMetrics(stats *statsd.Client, gw Gateway, name string, kind string, tags []string) {
+func dumpGwMetrics(stats Emitter, gw Gateway, name string, kind string, tags []string) {
 	conn := gw.Connection
 	gwtags := append(tags, "peer_gw:"+name, "peer_conn:"+conn.Name)
 	prefix := "gw." + kind + "."

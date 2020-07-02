@@ -2,7 +2,6 @@ package endpoints
 
 import (
 	"fmt"
-	"github.com/DataDog/datadog-go/statsd"
 )
 
 type Routez struct {
@@ -26,7 +25,7 @@ type Routes struct {
 	Subscriptions float64 `json:"subscriptions"`
 }
 
-func (v *Routez) Export(stats *statsd.Client) {
+func (v *Routez) Export(stats Emitter) {
 	tags := []string{"server_id:" + v.ServerID}
 
 	_ = stats.Gauge("route.num_routes", v.NumRoutes, tags, 1)
