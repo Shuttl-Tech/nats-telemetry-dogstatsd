@@ -6,6 +6,7 @@ import (
 	"github.com/DataDog/datadog-go/statsd"
 	"github.com/Shuttl-Tech/nats-telemetry-dogstatsd/endpoints"
 	"github.com/urfave/cli/v2"
+	"log"
 	"os"
 	"os/signal"
 	"syscall"
@@ -27,7 +28,7 @@ func start(c *cli.Context) error {
 		return err
 	}
 
-	metrics, err := statsd.New(config.DogstatsdAddr,
+	metrics, err := endpoints.NewDDEmitter(config.DogstatsdAddr,
 		statsd.WithNamespace(config.StatsNamespace),
 		statsd.WithTags(config.DefaultTags),
 		statsd.WithoutTelemetry())
@@ -40,10 +41,12 @@ func start(c *cli.Context) error {
 }
 
 func beginExport(ctx context.Context, emitter endpoints.Emitter, server string, frequency time.Duration) error {
+	log.Printf("starting the exporter loop at frequency %s", frequency)
 	ticker := time.NewTicker(frequency)
 	for {
 		select {
 		case <-ctx.Done():
+			log.Println("shutting down the exporter loop")
 			return nil
 
 		case <-ticker.C:

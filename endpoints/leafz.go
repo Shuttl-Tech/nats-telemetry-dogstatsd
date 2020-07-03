@@ -22,15 +22,15 @@ type Leaf struct {
 
 func (v *Leafz) Export(stats Emitter) {
 	tags := []string{"server_id:" + v.ServerID}
-	_ = stats.Gauge("leaf.nodes_count", v.Leafnodes, tags, 1)
+	stats.Gauge("leaf.nodes_count", v.Leafnodes, tags, 1)
 
 	for _, leaf := range v.Leafs {
 		leaftags := append(tags, "account:"+leaf.Account)
 
-		_ = stats.Gauge("leaf.in_msgs", leaf.InMsgs, leaftags, 1)
-		_ = stats.Gauge("leaf.out_msgs", leaf.OutMsgs, leaftags, 1)
-		_ = stats.Gauge("leaf.in_bytes", leaf.InBytes, leaftags, 1)
-		_ = stats.Gauge("leaf.out_bytes", leaf.OutBytes, leaftags, 1)
-		_ = stats.Gauge("leaf.subscriptions", leaf.Subscriptions, leaftags, 1)
+		stats.Gauge("leaf.in_msgs", leaf.InMsgs, leaftags, 1)
+		stats.Gauge("leaf.out_msgs", leaf.OutMsgs, leaftags, 1)
+		stats.Gauge("leaf.in_bytes", leaf.InBytes, leaftags, 1)
+		stats.Gauge("leaf.out_bytes", leaf.OutBytes, leaftags, 1)
+		stats.Gauge("leaf.subscriptions", leaf.Subscriptions, leaftags, 1)
 	}
 }

@@ -59,17 +59,17 @@ func dumpGwMetrics(stats Emitter, gw Gateway, name string, kind string, tags []s
 	prefix := "gw." + kind + "."
 
 	if d, err := time.ParseDuration(conn.Uptime); err == nil {
-		_ = stats.Gauge(prefix+"conn.uptime_sec", d.Seconds(), gwtags, 1)
+		stats.Gauge(prefix+"conn.uptime_sec", d.Seconds(), gwtags, 1)
 	}
 
 	if d, err := time.ParseDuration(conn.Idle); err == nil {
-		_ = stats.Gauge(prefix+"conn.idle_sec", d.Seconds(), gwtags, 1)
+		stats.Gauge(prefix+"conn.idle_sec", d.Seconds(), gwtags, 1)
 	}
 
-	_ = stats.Gauge(prefix+"conn.pending_bytes", conn.PendingBytes, gwtags, 1)
-	_ = stats.Gauge(prefix+"conn.in_msgs", conn.InMsgs, gwtags, 1)
-	_ = stats.Gauge(prefix+"conn.out_msgs", conn.OutMsgs, gwtags, 1)
-	_ = stats.Gauge(prefix+"conn.in_bytes", conn.InBytes, gwtags, 1)
-	_ = stats.Gauge(prefix+"conn.out_bytes", conn.OutBytes, gwtags, 1)
-	_ = stats.Gauge(prefix+"conn.subscriptions", conn.Subscriptions, gwtags, 1)
+	stats.Gauge(prefix+"conn.pending_bytes", conn.PendingBytes, gwtags, 1)
+	stats.Gauge(prefix+"conn.in_msgs", conn.InMsgs, gwtags, 1)
+	stats.Gauge(prefix+"conn.out_msgs", conn.OutMsgs, gwtags, 1)
+	stats.Gauge(prefix+"conn.in_bytes", conn.InBytes, gwtags, 1)
+	stats.Gauge(prefix+"conn.out_bytes", conn.OutBytes, gwtags, 1)
+	stats.Gauge(prefix+"conn.subscriptions", conn.Subscriptions, gwtags, 1)
 }

@@ -11,7 +11,7 @@ import (
 func exportMetrics(emitter endpoints.Emitter, server string) {
 	for endpoint, target := range endpoints.Sources {
 		query(server, endpoint, target)
-		go target.Export(emitter)
+		target.Export(emitter)
 	}
 }
 

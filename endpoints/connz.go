@@ -38,28 +38,28 @@ type Connections struct {
 func (v *Connz) Export(stats Emitter) {
 	tags := []string{"server_id:" + v.ServerID}
 
-	_ = stats.Gauge("conn.num_total", float64(len(v.Connections)), tags, 1)
+	stats.Gauge("conn.num_total", float64(len(v.Connections)), tags, 1)
 
 	for _, conn := range v.Connections {
 		connTags := append(tags, "conn_name:"+conn.Name)
 
 		if d, err := time.ParseDuration(conn.Rtt); err == nil {
-			_ = stats.Gauge("conn.rtt_microsec", float64(d.Microseconds()), connTags, 1)
+			stats.Gauge("conn.rtt_microsec", float64(d.Microseconds()), connTags, 1)
 		}
 
 		if d, err := time.ParseDuration(conn.Uptime); err == nil {
-			_ = stats.Gauge("conn.uptime_sec", d.Seconds(), connTags, 1)
+			stats.Gauge("conn.uptime_sec", d.Seconds(), connTags, 1)
 		}
 
 		if d, err := time.ParseDuration(conn.Idle); err == nil {
-			_ = stats.Gauge("conn.idle_sec", d.Seconds(), connTags, 1)
+			stats.Gauge("conn.idle_sec", d.Seconds(), connTags, 1)
 		}
 
-		_ = stats.Gauge("conn.in_msgs", conn.InMsgs, connTags, 1)
-		_ = stats.Gauge("conn.out_msgs", conn.OutMsgs, connTags, 1)
-		_ = stats.Gauge("conn.in_bytes", conn.InBytes, connTags, 1)
-		_ = stats.Gauge("conn.out_bytes", conn.OutBytes, connTags, 1)
-		_ = stats.Gauge("conn.pending_bytes", conn.PendingBytes, connTags, 1)
-		_ = stats.Gauge("conn.subscriptions", conn.Subscriptions, connTags, 1)
+		stats.Gauge("conn.in_msgs", conn.InMsgs, connTags, 1)
+		stats.Gauge("conn.out_msgs", conn.OutMsgs, connTags, 1)
+		stats.Gauge("conn.in_bytes", conn.InBytes, connTags, 1)
+		stats.Gauge("conn.out_bytes", conn.OutBytes, connTags, 1)
+		stats.Gauge("conn.pending_bytes", conn.PendingBytes, connTags, 1)
+		stats.Gauge("conn.subscriptions", conn.Subscriptions, connTags, 1)
 	}
 }

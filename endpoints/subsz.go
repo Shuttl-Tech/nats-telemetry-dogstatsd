@@ -12,12 +12,12 @@ type Subsz struct {
 }
 
 func (v *Subsz) Export(stats Emitter) {
-	_ = stats.Gauge("sub.num_subscriptions", v.NumSubscriptions, nil, 1)
-	_ = stats.Gauge("sub.num_cache", v.NumCache, nil, 1)
-	_ = stats.Gauge("sub.num_inserts", v.NumInserts, nil, 1)
-	_ = stats.Gauge("sub.num_removes", v.NumRemoves, nil, 1)
-	_ = stats.Gauge("sub.num_matches", v.NumMatches, nil, 1)
-	_ = stats.Gauge("sub.cache_hit_rate", v.CacheHitRate, nil, 1)
-	_ = stats.Gauge("sub.max_fanout", v.MaxFanout, nil, 1)
-	_ = stats.Gauge("sub.avg_fanout", v.AvgFanout, nil, 1)
+	stats.Gauge("sub.num_subscriptions", v.NumSubscriptions, nil, 1)
+	stats.Gauge("sub.num_cache", v.NumCache, nil, 1)
+	stats.Gauge("sub.num_inserts", v.NumInserts, nil, 1)
+	stats.Gauge("sub.num_removes", v.NumRemoves, nil, 1)
+	stats.Gauge("sub.num_matches", v.NumMatches, nil, 1)
+	stats.Gauge("sub.cache_hit_rate", v.CacheHitRate, nil, 1)
+	stats.Gauge("sub.max_fanout", v.MaxFanout, nil, 1)
+	stats.Gauge("sub.avg_fanout", v.AvgFanout, nil, 1)
 }
